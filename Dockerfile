@@ -5,7 +5,7 @@ RUN npm install -g json-server
 WORKDIR /data
 VOLUME /data
 
-ADD sava-product/products-db-1x.json /default-db.json
+ADD products-db-1x.json /default-db.json
 ADD routes.json /routes.json
 
 EXPOSE 8080
