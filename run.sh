@@ -1,12 +1,16 @@
-#!/bin/bash
+#!/bin/sh
 
 args="$@"
 
-args="$@ -p 80"
+args="$@ --host 0.0.0.0 --port 8080 --routes /routes.json"
 
 file=/data/db.json
 if [ -f $file ]; then
     echo "Found db.json, trying to open"
+    args="$args db.json"
+else
+    echo "Copying default db.json"
+    mv /default-db.json /data/db.json
     args="$args db.json"
 fi
 

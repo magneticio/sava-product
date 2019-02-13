@@ -1,12 +1,14 @@
-FROM node:latest
-MAINTAINER Christian Lück <christian@lueck.tv>
+FROM node:lts-alpine
 
 RUN npm install -g json-server
 
 WORKDIR /data
 VOLUME /data
 
-EXPOSE 80
+ADD sava-product/products-db-1x.json /default-db.json
+ADD routes.json /routes.json
+
+EXPOSE 8080
 ADD run.sh /run.sh
-ENTRYPOINT ["bash", "/run.sh"]
+ENTRYPOINT ["sh", "/run.sh"]
 CMD []

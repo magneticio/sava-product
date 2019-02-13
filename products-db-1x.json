@@ -1,0 +1,53 @@
+{
+	"products": [
+		{
+			"id": 1,
+			"title": "Single-Origin Coffee",
+			"description": "Neutra iceland single-origin coffee ullamco, wolf health goth enim hell of franzen organic normcore listicle direct trade typewriter. Next level reprehenderit post-ironic authentic nulla.",
+			"price": 59,
+			"locale": "en"
+		},
+		{
+			"id": 2,
+			"title": "Authentic Jean Shorts",
+			"description": "Chartreuse authentic jean shorts mumblecore literally retro cillum hoodie tumblr slow-carb ramps. Cliche eiusmod flexitarian in man bun health goth franzen coloring book ugh DIY af bushwick consectetur.",
+			"price": 39,
+			"locale": "en"
+		},
+		{
+			"id": 3,
+			"title": "Dreamcatcher",
+			"description": "Dreamcatcher asymmetrical mumblecore fashion axe green juice vice iceland occupy raw denim. Waistcoat retro ugh kinfolk art party cronut minim listicle kitsch fam in truffaut put a bird on it duis keffiyeh irure.",
+			"price": 25,
+			"locale": "ie"
+		},
+		{
+			"id": 4,
+			"title": "Asymmetrical Craft Beer",
+			"description": "Readymade voluptate authentic asymmetrical craft beer pinterest polaroid brunch hot chicken mumblecore truffaut in palo santo. Bicycle rights nisi put a bird on it pop-up fam direct trade kickstarter jianbing skateboard trust fund ad ut.",
+			"price": 18,
+			"locale": "en"
+		},
+		{
+			"id": 5,
+			"title": "Edison Vinyl Pitchfork",
+			"description": "Esse edison bulb vinyl pitchfork iceland in leggings meditation venmo tousled neutra PBR&B plaid. Vexillologist ennui direct trade laborum lorem keytar bushwick dolore put a bird on it nostrud tumeric 90's art party cloud bread.",
+			"price": 250,
+			"locale": "en"
+		},
+		{
+			"id": 6,
+			"title": "Enamel Pin Meggings",
+			"description": "Enamel pin meggings ad brooklyn anim sartorial drinking vinegar raclette affogato in coloring book et lo-fi snackwave echo park. Sartorial distillery taxidermy, post-ironic blue bottle brooklyn hoodie disrupt consequat narwhal.",
+			"price": 35,
+			"locale": "ie"
+		},
+		{
+			"id": 7,
+			"title": "Tote Bag",
+			"description": "Tote bag ennui snackwave, plaid cray eiusmod banh mi tofu mlkshk gentrify aliquip magna tousled flannel tumeric ut. Taxidermy aute cillum venmo four loko adipisicing, ut sint synth tacos.",
+			"price": 129,
+			"locale": "ie"
+		}
+	]
+}

@@ -1,0 +1,4 @@
+{
+    "/:resource/:locale": "/:resource?locale=:locale",
+    "/:resource/:locale/:id": "/:resource/:id"
+}

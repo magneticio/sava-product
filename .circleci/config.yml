@@ -1,0 +1,28 @@
+version: 2.1
+defaults: &defaults
+  docker:
+    - image: circleci/python:3.7.2
+jobs:
+  build-image:
+    <<: *defaults
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching:
+      - run:
+          name: Build Docker image
+          command: |
+            tag="${CIRCLE_TAG:1}"
+            docker build -t $DOCKER_ORG/sava-product:$tag .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push $DOCKER_ORG/sava-product:$tag
+workflows:
+  version: 2
+  publish-version:
+    jobs:
+      - build-image:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
