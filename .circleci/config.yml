@@ -29,6 +29,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "f6:5c:c7:27:f3:6b:7b:55:e7:e9:56:1b:54:45:57:23"
+            - "62:c1:24:8f:af:ce:8c:b8:d7:97:72:34:46:b9:44:c2"
       - run:
           name: Push artifact to service-catalog
           command: |
