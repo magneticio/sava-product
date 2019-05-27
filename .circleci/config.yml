@@ -1,9 +1,9 @@
 version: 2.1
 defaults: &defaults
   docker:
-    - image: circleci/python:3.7.2
+    - image: circleci/python:3.7
 jobs:
-  build-image:
+  build-push-image:
     <<: *defaults
     steps:
       - checkout
@@ -12,17 +12,77 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            tag="${CIRCLE_TAG:1}"
-            docker build -t $DOCKER_ORG/sava-product:$tag .
+            if [ "$DOCKER_ORG" == "" ]
+            then
+              echo "Environment DOCKER_ORG is not defined"
+              exit 1
+            fi
+
+            image_tag="${CIRCLE_TAG:1}"
+            docker build -t $DOCKER_ORG/sava-product:$image_tag .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push $DOCKER_ORG/sava-product:$tag
+            docker push $DOCKER_ORG/$CIRCLE_PROJECT_REPONAME:$image_tag
+  update-service-def:
+    <<: *defaults
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "68:e9:39:38:a9:73:a7:bd:05:dc:20:4e:a5:e2:9a:1c"
+      - run:
+          name: Push artifact to service-catalog
+          command: |
+            if [ "$DOCKER_ORG" == "" ]
+            then
+              echo "Environment DOCKER_ORG is not defined"
+              exit 1
+            fi
+            image_name=$DOCKER_ORG/$CIRCLE_PROJECT_REPONAME
+            image_tag="${CIRCLE_TAG:1}"
+
+            git clone https://github.com/$CIRCLE_PROJECT_USERNAME/kmt-example-service-catalog.git
+            cd kmt-example-service-catalog
+            if [ ! -f $CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME.json]
+            then
+              echo "Service $CIRCLE_PROJECT_REPONAME is not defined"
+              exit 1
+            fi
+            
+            echo "Creating version ${CIRCLE_TAG}"
+            cp -r ../deploy ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_TAG}
+            pushd ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_TAG}
+            image=${DOCKER_REGISTRY}/${image_name}:$image_tag
+            kustomize edit set image $image
+            kustomize edit set namesuffix -- -${CIRCLE_TAG}
+            python3 vamp-kmt-examples/circleci/version-update/update_version.py -f $CIRCLE_PROJECT_REPONAME.json -t $image_tag
+            popd
+            
+            git add .
+            if [ `git status -s | wc -l` -gt 0 ]
+            then
+              git config user.email "${GITHUB_EMAIL}"
+              git config user.name "${CIRCLE_USERNAME}"
+              git commit -m "Added "${CIRCLE_TAG}""
+              git pull --rebase && git push origin master
+            else
+              echo "No change were detected. Skipping."
+            fi
+     
 workflows:
   version: 2
   publish-version:
     jobs:
-      - build-image:
+      - build-push-image:
           filters:
             branches:
               ignore: /.*/
             tags:
-              only: /^v.*/
+              only: /^v\d*\.\d*\.\d*$/
+      - update-service-def:
+          requires:
+          - build-push-image
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d*\.\d*\.\d*$/
