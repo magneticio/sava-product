@@ -43,7 +43,7 @@ jobs:
             git clone https://github.com/$CIRCLE_PROJECT_USERNAME/kmt-example-service-catalog.git
             cd kmt-example-service-catalog
             
-            service_def=$(realname $CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME.json)
+            service_def=$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME.json
             if [ ! -f $service_def ]
             then
               echo "Service $CIRCLE_PROJECT_REPONAME is not defined"
