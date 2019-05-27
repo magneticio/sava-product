@@ -57,7 +57,7 @@ jobs:
             image=${DOCKER_REGISTRY}/${image_name}:$image_tag
             kustomize edit set image $image
             kustomize edit set namesuffix -- -${CIRCLE_TAG}
-            python3 $update_version -f $CIRCLE_PROJECT_REPONAME.json -t $image_tag
+            python3 $update_version -f ../$CIRCLE_PROJECT_REPONAME.json -t $image_tag
             popd
             
             git add .
