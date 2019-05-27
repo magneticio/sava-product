@@ -54,7 +54,7 @@ jobs:
             echo "Creating version ${CIRCLE_TAG}"
             cp -r ../deploy ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_TAG}
             pushd ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_TAG}
-            image=${DOCKER_REGISTRY}/${image_name}:$image_tag
+            image=${image_name}:$image_tag
             kustomize edit set image $image
             kustomize edit set namesuffix -- -${CIRCLE_TAG}
             popd
