@@ -54,7 +54,7 @@ jobs:
             image=${DOCKER_REGISTRY}/${image_name}:$image_tag
             kustomize edit set image $image
             kustomize edit set namesuffix -- -${CIRCLE_TAG}
-            python3 vamp-kmt-examples/circleci/version-update/update_version.py -f $CIRCLE_PROJECT_REPONAME.json -t $image_tag
+            python3 ../../bin/update_version.py -f $CIRCLE_PROJECT_REPONAME.json -t $image_tag
             popd
             
             git add .
