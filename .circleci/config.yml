@@ -19,7 +19,7 @@ jobs:
             fi
 
             image_tag="${CIRCLE_TAG:1}"
-            docker build -t $DOCKER_ORG/sava-product:$image_tag .
+            docker build -t $DOCKER_ORG/$CIRCLE_PROJECT_REPONAME:$image_tag .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push $DOCKER_ORG/$CIRCLE_PROJECT_REPONAME:$image_tag
   update-service-def:
