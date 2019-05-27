@@ -1,7 +1,7 @@
 version: 2.1
 defaults: &defaults
   docker:
-    - image: circleci/python:3.7
+    - image: vampio/kmt:circleci-latest
 jobs:
   build-push-image:
     <<: *defaults
