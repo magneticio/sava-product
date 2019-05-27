@@ -40,9 +40,6 @@ jobs:
             image_name=$DOCKER_ORG/$CIRCLE_PROJECT_REPONAME
             image_tag="${CIRCLE_TAG:1}"
             
-            update_version=$(realpath bin/update_version.py)
-            echo $update_version
-
             git clone https://github.com/$CIRCLE_PROJECT_USERNAME/kmt-example-service-catalog.git
             cd kmt-example-service-catalog
             
@@ -59,8 +56,9 @@ jobs:
             image=${DOCKER_REGISTRY}/${image_name}:$image_tag
             kustomize edit set image $image
             kustomize edit set namesuffix -- -${CIRCLE_TAG}
-            python3 $update_version -f $service_def -t $image_tag
             popd
+            
+            python3 bin/update_version.py -f $service_def -t $image_tag
             
             git add .
             if [ `git status -s | wc -l` -gt 0 ]
