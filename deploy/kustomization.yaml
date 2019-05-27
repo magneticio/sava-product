@@ -9,7 +9,3 @@ resources:
 commonLabels:
   app: sava-product
 
-## image tag
-images:
-- name: vampio/sava-product
-  newTag: latest
