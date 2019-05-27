@@ -45,7 +45,9 @@ jobs:
 
             git clone https://github.com/$CIRCLE_PROJECT_USERNAME/kmt-example-service-catalog.git
             cd kmt-example-service-catalog
-            if [ ! -f $CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME.json]
+            
+            service_def=$(realname $CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME.json)
+            if [ ! -f $service_def ]
             then
               echo "Service $CIRCLE_PROJECT_REPONAME is not defined"
               exit 1
@@ -57,7 +59,7 @@ jobs:
             image=${DOCKER_REGISTRY}/${image_name}:$image_tag
             kustomize edit set image $image
             kustomize edit set namesuffix -- -${CIRCLE_TAG}
-            python3 $update_version -f ../$CIRCLE_PROJECT_REPONAME.json -t $image_tag
+            python3 $update_version -f $service_def -t $image_tag
             popd
             
             git add .
