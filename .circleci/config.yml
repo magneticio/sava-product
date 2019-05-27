@@ -58,7 +58,7 @@ jobs:
             kustomize edit set namesuffix -- -${CIRCLE_TAG}
             popd
             
-            python3 bin/update_version.py -f $service_def -t $image_tag
+            python3 ../bin/update_version.py -f $service_def -t $image_tag
             
             git add .
             if [ `git status -s | wc -l` -gt 0 ]
