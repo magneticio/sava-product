@@ -56,7 +56,8 @@ jobs:
             pushd ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_TAG}
             image=${image_name}:$image_tag
             kustomize edit set image $image
-            kustomize edit set namesuffix -- -${CIRCLE_TAG}
+            kustomize edit set namesuffix -- -$image_tag
+            kustomize edit add label version:$image_tag
             popd
             
             python3 ../bin/update_version.py -f $service_def -t $image_tag
