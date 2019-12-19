@@ -42,14 +42,14 @@ def parse_options(argv):
 def validate_tag(tag):
     semantic_version_regex = '^(\d+)\.(\d+)\.(\d+)$'
     pattern = re.compile(semantic_version_regex)
-    if None == pattern.match(tag):
+    if pattern.match(tag) is None:
         print('Tag not in semantic versioning format')
         sys.exit(1)
 
 
 def read_json(service_definition_file_path):
     service_definition_file = Path(service_definition_file_path)
-    if False == service_definition_file.is_file():
+    if service_definition_file.is_file() is False:
         print('Service definition file does not exist: {}'.format(
             service_definition_file_path))
         sys.exit(1)
@@ -59,12 +59,12 @@ def read_json(service_definition_file_path):
 
 
 def update_version(json, tag):
-    if None == json.get('versions') or len(json['versions']) == 0:
+    if json.get('versions') is None or len(json['versions']) == 0:
         json['versions'] = [{'tag': tag, 'dependencies': []}]
         return json
 
     versions = json['versions']
-    if any(entry['tag'] != None and entry['tag'] == tag for entry in versions):
+    if any(entry['tag'] is not None and entry['tag'] == tag for entry in versions):
         print('Tag already exists')
         return json
     if len(versions) > 0:
@@ -92,7 +92,7 @@ def search_latest_version(versions, tag):
             continue
         break
 
-    if None == latest_version:
+    if latest_version is None:
         return index, {'tag': tag, 'dependencies': []}
 
     return index, latest_version
