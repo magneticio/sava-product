@@ -20,4 +20,4 @@ if [ -f $file ]; then
     args="$args file.js"
 fi
 
-json-server $args
+json-server "$args"
